@@ -11,20 +11,20 @@ Ans:
 
 ```java=
 public int[] twoSum(int[] nums, int terget) {
-		Map<Integer, Integer> intMap = new HashMap<>();
-		int r;
-		for (int i = 0; i < nums.length; i++) {
-			r = terget - nums[i];
-			if (intMap.containsKey(r)) {
-				return new int[] {intMap.get(r) ,i};
-			} else {
-            
-                // key 存
-				intMap.put(nums[i], i);
-			}
-		}
-		throw new IllegalArgumentException("Can not find answer in the Array.");
-	}
+    Map<Integer, Integer> intMap = new HashMap<>();
+    int r;
+    for (int i = 0; i < nums.length; i++) {
+        r = terget - nums[i];
+        if (intMap.containsKey(r)) {
+            return new int[] {intMap.get(r) ,i};
+        } else {
+
+            // key:陣列數值, value:陣列索引
+            intMap.put(nums[i], i);
+        }
+    }
+    throw new IllegalArgumentException("Can not find answer in the Array.");
+}
 ```
 
 
