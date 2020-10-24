@@ -1,10 +1,17 @@
-[TOC]
+TOC
+---
+* [EASY](##EASY)
+	* [TwoSum](###TwoSum)
+	* [ReverseInteger](###ReverseInteger)
+* 
+---
+
 
 # LeetCode
 
 ## EASY
 
-### Two Sum
+### TwoSum
 > 輸入一串可重複的整數,其中某兩個整數和必等於目標值
 > + example1: input: nums[2,7,11,15] target=9 output: [0,1] 因為 nums[0]+nums[1]=9
 > + example2: input: nums[3,3] target=6 output: [0,1]
@@ -29,7 +36,7 @@ public int[] twoSum(int[] nums, int terget) {
 }
 ```
 
-### Reverse Integer
+### ReverseInteger
 > 倒轉一個範圍從 -2e31 ~ 2e31-1 整數
 > + example1: input:123, output:321
 > + example2: input:-123, output: -321
