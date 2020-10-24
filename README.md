@@ -1,8 +1,8 @@
 TOC
 ---
-* [EASY](##EASY)
-	* [TwoSum](###TwoSum)
-	* [ReverseInteger](###ReverseInteger)
+* [EASY](#EASY)
+	* [TwoSum](#TwoSum)
+	* [ReverseInteger](#ReverseInteger)
 * 
 ---
 
