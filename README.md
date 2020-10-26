@@ -4,6 +4,7 @@ TOC
 	* [Two Sum](#TwoSum)
 	* [Reverse Integer](#ReverseInteger)
 	* [Palindrome Number](#PalindromeNumber)
+	* [Roman to Integer](#RomanToInteger)
 * 
 ---
 
@@ -13,10 +14,10 @@ TOC
 ## EASY
 
 ### TwoSum
-> 輸入一串可重複的整數,其中某兩個整數和必等於目標值
-> + example1: input: nums[2,7,11,15] target=9 output: [0,1] 因為 nums[0]+nums[1]=9
-> + example2: input: nums[3,3] target=6 output: [0,1]
-> + example3: input: nums[3,2,4] target=6 output:[1,2]
+> 輸入一串可重複的整數,其中某兩個整數和必等於目標值  
+> + example1: input: nums[2,7,11,15] target=9 output: [0,1] 因為 nums[0]+nums[1]=9  
+> + example2: input: nums[3,3] target=6 output: [0,1]  
+> + example3: input: nums[3,2,4] target=6 output:[1,2]  
 
 
 ```java=
@@ -38,11 +39,11 @@ public int[] twoSum(int[] nums, int terget) {
 ```
 
 ### ReverseInteger
-> 倒轉一個範圍從 -2e31 ~ 2e31-1 整數
-> + example1: input:123, output:321
-> + example2: input:-123, output: -321
-> + example3: input: 120, output: 21
-> + example4: input: 0, output: 0
+> 倒轉一個範圍從 -2e31 ~ 2e31-1 整數  
+> + example1: input:123, output:321  
+> + example2: input:-123, output: -321  
+> + example3: input: 120, output: 21  
+> + example4: input: 0, output:  
 
 ```java=
 public static int reverse(int x) {
@@ -74,10 +75,10 @@ public static int reverse(int x) {
 ```
 
 ### PalindromeNumber
-> 判斷整數是否為 Palindrome Number (從左而右,從右而左讀起來都一樣)
-> example1: input:121 output:true
-> example2: input: -121 output: false (變成121-)
-> example3: input: 10 output: false (變成01)
+> 判斷整數是否為 Palindrome Number (從左而右,從右而左讀起來都一樣)  
+> example1: input:121 output:true  
+> example2: input: -121 output: false (變成121-)  
+> example3: input: 10 output: false (變成01)  
 
 ```java=
 public boolean isPalindrome(int x) {
@@ -118,6 +119,83 @@ public boolean isPalindrome(int x) {
 		return false;
 	*/
 	}
+```
+
+### RomanToInteger
+> 將輸入的羅馬數字字串轉換成整數  
+> 規則: I(1) 放在 V(5)前面會變 IV(4), I(1) 放在 X(10)前面會變 IX(9)  
+> 規則: X(10) 放在 L(50)前面會變 XL(40), X(10) 放在 C(100)前面會變 XC(90)  
+> 規則: C(100) 放在 D(500)前面會變 CD(400), C(100) 放在 M(1000)前面會變 CM(900)  
+> 限制: 1 <= s.length <=15  
+> 限制: 僅能有以下羅馬字串['I', 'V', 'X', 'L', 'C', 'D', 'M']  
+> 限制: 換算的數字必須介於1~3999之間  
+> example1: input: s= "III", output: 3
+> example2: input: s= "IV", output: 4
+> example3: input: s= "IX", output: 9
+> example4: input: s= "LVIII", output: 58
+> example5: input: s= "MCMXCIV", output: 1994
+
+| Symbol | Value |
+| ------ |:-----:|
+| I      |   1   |
+| V      |   5   |
+| X      |  10   |
+| L      |  50   |
+| C      |  100  |
+| D      |  500  |
+| M      | 1000  |
+
+```java=
+public int romanToInt(String str) {
+	int total = 0;
+	// 條件,字串長度限制(1<= str <= 15), 只能有字元I V X L C D M
+	if (str.length() >= 1 && str.length() <= 15 && str.matches("^[IVXLCDM]+$")) {
+		// 規則 I:1, V:5, X:10, L:50, C:100, D:500, M:1000,
+		// 變形 IV:4, IX:9, XL:40, XC:90, CD:400, CM:900
+		Map<String, Integer> romanMap = new HashMap<>();
+		romanMap.put("I", 1);
+		romanMap.put("V", 5);
+		romanMap.put("X", 10);
+		romanMap.put("L", 50);
+		romanMap.put("C", 100);
+		romanMap.put("D", 500);
+		romanMap.put("M", 1000);
+
+//			int curVal = 0;
+
+		String[] strArray = str.split("");
+		for (int i = strArray.length - 1; i >= 0; i--) {
+			if (strArray.length == 1 || i == strArray.length - 1) {
+				total = romanMap.get(strArray[i]);
+				continue;
+			}
+
+			// v.1
+//				if (strArray[i].equals("C") && strArray[i + 1].matches("^[DM]{1}$")) {
+//					curVal = -romanMap.get(strArray[i]);
+//				} else if (strArray[i].equals("X") && strArray[i + 1].matches("^[LC]{1}$")) {
+//					curVal = -romanMap.get(strArray[i]);
+//				} else if (strArray[i].equals("I") && strArray[i + 1].matches("^[VX]{1}$")) {
+//					curVal = -romanMap.get(strArray[i]);
+//				} else {
+//					curVal = romanMap.get(strArray[i]);
+//				}
+//				total += curVal;
+
+
+			// v.2 不管上面的規則, 直接前面的數字比後面小的時候就是減的
+			if(romanMap.get(strArray[i]) < romanMap.get(strArray[i+1]) ) {
+				total -= romanMap.get(strArray[i]);
+			} else {
+				total += romanMap.get(strArray[i]);
+			}
+
+		}
+	} else {
+		System.out.println("Not match");
+	}
+	return total;
+}
 ```
 
 ###### tags: `LeetCode`, `Y.`
