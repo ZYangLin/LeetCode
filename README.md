@@ -5,6 +5,7 @@ TOC
 	* [Reverse Integer](#ReverseInteger)
 	* [Palindrome Number](#PalindromeNumber)
 	* [Roman to Integer](#RomanToInteger)
+	* [Longest Common Prefix](#LongestCommonPrefix)
 * 
 ---
 
@@ -46,7 +47,7 @@ public int[] twoSum(int[] nums, int terget) {
 > + example4: input: 0, output:  
 
 ```java=
-public static int reverse(int x) {
+public int reverse(int x) {
 	// input:0, return:0
 	// input value 必須介於 Integer.MIN_VALUE and Integer.MAX_VALUE, 
 	// 超過該範圍 return: 0
@@ -195,6 +196,54 @@ public int romanToInt(String str) {
 		System.out.println("Not match");
 	}
 	return total;
+}
+```
+
+### LongestCommonPrefix
+> 發現一組字串陣列中從開頭開始算,求他們共同的字母有幾個? 若無共同字母則回傳空字串""  
+> example1: input: strs = ["flower","flow","flight"]; output: "fl"  
+> example2: input: strs = ["dog","racecar","car"]; output: ""  
+> constrains: 0 <= strs.length <=200  
+> constrains: 0 <= strs[i].length() <= 200  
+> constrains: strs[i] consists of only lower-case English letters.  
+
+```java=
+// Horizontal scanning
+public String longestCommonPrefix(String[] strs) {
+	if (strs.length == 0)
+		return "";
+	// 選第0個陣列數值當比較值
+	String prefix = strs[0];
+	// 進入迴圈和陣列裡面其他的數值做比較
+	for (int i = 1; i < strs.length; i++)
+		// 當 strs[i]的內容無法完整和prefix的內容相符時 就進入迴圈一值比對
+		while (strs[i].indexOf(prefix) != 0) {
+			// prefix 每次都捨棄最後一個字元和 strs[i]進行比對
+			prefix = prefix.substring(0, prefix.length() - 1);
+			if (prefix.isEmpty())
+				return "";
+		}
+	return prefix;
+}
+
+
+// Vertical scanning
+public String longestCommonPrefix(String[] strs) {
+	if (strs == null || strs.length == 0) return "";
+
+	// 第一層迴圈為 strs[0] 第一個字元 到 最後一個字元
+	for (int i = 0; i < strs[0].length() ; i++){
+		// 從第一個字元開始取出來
+		char c = strs[0].charAt(i);
+		// 第二層迴圈為 strs[1] 到陣列的最後一個字串
+		for (int j = 1; j < strs.length; j ++) {
+			//條件1: i == strs[j].length() 當找到陣列中長度最短的字串時 最長共同前綴字元(LCP)的比較也隨即結束 
+			//條件2: strs[j].charAt(i) != c 當strs[j]的第charAt(i)個字元和我們的 c 不相同時比較隨即結束
+			if (i == strs[j].length() || strs[j].charAt(i) != c)
+				return strs[0].substring(0, i);             
+		}
+	}
+	return strs[0];
 }
 ```
 
