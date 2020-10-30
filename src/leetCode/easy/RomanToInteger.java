@@ -4,8 +4,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RomanToInteger {
-
-	public int romanToInt(String str) {
+	public static void main(String[] args) {
+		System.out.println(romanToInt("III"));;
+	}
+	
+	
+	public static int romanToInt(String str) {
+		// v3 不使用Map直接將字串倒著看 
+		int result = 0;
+		char lastChat;
+		
+		for(int i = str.length()-1; i >= 0; i--) {
+			lastChat = str.charAt(i);
+			switch(lastChat) {
+				case 'I':
+					if(i < str.length()-1 && (str.charAt(i+1) == 'V' || str.charAt(i+1) == 'X' )) {
+						result -= 1;
+					} else {
+						result += 1;
+					}
+					break;
+				case 'V':
+					result += 5;
+					break;
+				case 'X':
+					if(i < str.length() && (str.charAt(i+1) == 'L' || str.charAt(i+1) == 'C' )) {
+						result -= 10;
+					} else {
+						result += 10;
+					}
+					break;
+				case 'L':
+					result += 50;
+					break;
+				case 'C':
+					if(i < str.length() && (str.charAt(i+1) == 'D' || str.charAt(i+1) == 'M' )) {
+						result -= 100;
+					} else {
+						result += 100;
+					}
+					break;
+				case 'D':
+					result += 500;
+					break;
+				case 'M':
+					result += 1000;
+					break;
+			} 
+		}
+		return result;
+		
+		/*
 		int total = 0;
 		// 條件,字串長度限制(1<= str <= 15), 只能有字元I V X L C D M
 		if (str.length() >= 1 && str.length() <= 15 && str.matches("^[IVXLCDM]+$")) {
@@ -54,5 +103,6 @@ public class RomanToInteger {
 			System.out.println("Not match");
 		}
 		return total;
+		*/
 	}
 }
