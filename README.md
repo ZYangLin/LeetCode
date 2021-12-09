@@ -1,3 +1,4 @@
+{%hackmd theme-dark %}
 TOC
 ---
 * [EASY](#EASY)
@@ -7,7 +8,8 @@ TOC
 	* [Roman to Integer](#RomanToInteger)
 	* [Longest Common Prefix](#LongestCommonPrefix)
 	* [Valid Parentheses](#ValidParentheses)
-* 
+* [MEDIUM](#MEDIUM)
+    * [Add Two Numbers](#AddTwoNumbers)
 ---
 
 
@@ -368,5 +370,54 @@ public static boolean isValid(String s) {
 
 }
 ```
+
+## MEDIUM
+
+### AddTwoNumbers
+> 輸入兩個非空的數值串列求總和
+> ![](https://i.imgur.com/mBbtFtN.png)
+
+```java=
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode l3 = new ListNode(0);
+        ListNode temp = l3;
+        int carry = 0;
+        int sum = 0;
+        
+        while(l1 != null || l2 != null){
+            int x =  (l1 == null) ? 0 : l1.val;
+            int y =  (l2 == null) ? 0 : l2.val;
+            
+            sum = x + y + carry;
+            // 取得進位數值
+            carry = sum / 10;
+            // 創造子節點並賦予數值
+            temp.next = new ListNode(sum % 10);
+            // 將當前節點移到剛創立的子節點
+            temp = temp.next;
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+        
+        // 最後還要再做一次是否有進位的判斷
+        if (carry > 0) 
+            temp.next = new ListNode(1);
+        
+        return l3.next;
+    }
+}
+```
+ 
 
 ###### tags: `LeetCode`, `Y.`
