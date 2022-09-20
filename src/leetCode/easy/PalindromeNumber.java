@@ -1,6 +1,10 @@
 package leetCode.easy;
 
 public class PalindromeNumber {
+	public static void main(String[] args) {
+		PalindromeNumber pn = new PalindromeNumber();
+		System.err.println(pn.isPalindrome(211));
+	}
 	public boolean isPalindrome(int x) {
 		// v2
 		// x 為負數或者 x不為0個位數卻為0時 都不可能是palindrome
